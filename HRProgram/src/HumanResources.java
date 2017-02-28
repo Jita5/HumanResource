@@ -20,21 +20,8 @@ public class HumanResources {
 	private JTextField stateTxt;
 	private JTextField emailTxt;
 	private JTextField zipTxt;
-//	private String empID;
-//	private String firstName;
-//	private String middleInitial;
-//	private String lastName;
-//	private String dob;
-//	private String ssn;
-//	private String address;
-//	private String apt;
-//	private String city;
-//	private String state;
-//	private String zip;
-//	private String email;
 	private int univID;
 	
-
 	/**
 	 * Launch the application.
 	 */
@@ -62,39 +49,8 @@ public class HumanResources {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-//		try {
-//			// creating mysql connection
-//			Class.forName("com.mysql.jdbc.Driver");
-//			String myUrl = "jdbc:mysql://localhost:3306/humanresource";
-//			Connection con = DriverManager.getConnection(myUrl, "root", "root");
-//
-//			// creating select query & statement
-//			Statement st = con.createStatement();
-//			PreparedStatement prepSt = con.prepareStatement("SELECT * FROM employee WHERE emp_id>= ?");
-//			
-//			prepSt.setString(1, "0");
-//			ResultSet rs = prepSt.executeQuery();
-//			if (rs.next()) {
-//				empID = rs.getString("emp_id");
-//				firstName = rs.getString("first_name");
-//				middleInitial = rs.getString("middle_initial");
-//				lastName = rs.getString("last_name");	
-//				dob = rs.getString("dob");
-//				ssn = rs.getString("ssn");
-//				address = rs.getString("address");
-//				apt = rs.getString("apt");
-//				city = rs.getString("city");
-//				state = rs.getString("state");
-//				zip = rs.getString("zip");
-//				email = rs.getString("email");
-//			}						
-//			st.close();
-//			prepSt.close();
-//		} catch (Exception e) {
-//			System.err.println(e.getMessage());
-//		}
 		
-		Employee emp = new Employee(univID);
+		Employee emp = new Employee(univID, 4);
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
@@ -212,6 +168,23 @@ public class HumanResources {
 		JButton prevBtn = new JButton("Previous");
 		prevBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				univID = Integer.parseInt(empIDdisp.getText());
+				System.out.println(univID);
+				Employee emp = new Employee(univID, 1);
+				if (emp.getDisplay()) {				
+					empIDdisp.setText(emp.getEmpID());
+					firstTxt.setText(emp.getFirstName());
+					middleTxt.setText(emp.getMiddleInitial());
+					lastTxt.setText(emp.getLastName());
+					dobTxt.setText(emp.getDob());
+					ssnTxt.setText(emp.getSsn());
+					addressTxt.setText(emp.getAddress());				
+					aptTxt.setText(emp.getApt());
+					cityTxt.setText(emp.getCity());
+					stateTxt.setText(emp.getState());
+					zipTxt.setText(emp.getZip());
+					emailTxt.setText(emp.getEmail());
+				}
 			}
 		});
 		prevBtn.setBounds(0, 0, 90, 23);
@@ -236,20 +209,23 @@ public class HumanResources {
 		JButton nextBtn = new JButton("Next");
 		nextBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				univID = Integer.parseInt(emp.getEmpID());
-				Employee emp = new Employee(univID);
-				empIDdisp.setText(emp.getEmpID());
-				firstTxt.setText(emp.getFirstName());
-				middleTxt.setText(emp.getMiddleInitial());
-				lastTxt.setText(emp.getLastName());
-				dobTxt.setText(emp.getDob());
-				ssnTxt.setText(emp.getSsn());
-				addressTxt.setText(emp.getAddress());				
-				aptTxt.setText(emp.getApt());
-				cityTxt.setText(emp.getCity());
-				stateTxt.setText(emp.getState());
-				zipTxt.setText(emp.getZip());
-				emailTxt.setText(emp.getEmail());
+				univID = Integer.parseInt(empIDdisp.getText());
+				System.out.println(univID);
+				Employee emp = new Employee(univID, 4);
+				if (emp.getDisplay()) {				
+					empIDdisp.setText(emp.getEmpID());
+					firstTxt.setText(emp.getFirstName());
+					middleTxt.setText(emp.getMiddleInitial());
+					lastTxt.setText(emp.getLastName());
+					dobTxt.setText(emp.getDob());
+					ssnTxt.setText(emp.getSsn());
+					addressTxt.setText(emp.getAddress());				
+					aptTxt.setText(emp.getApt());
+					cityTxt.setText(emp.getCity());
+					stateTxt.setText(emp.getState());
+					zipTxt.setText(emp.getZip());
+					emailTxt.setText(emp.getEmail());
+				}
 			}
 		});
 		nextBtn.setBounds(345, 0, 90, 23);
@@ -267,19 +243,5 @@ public class HumanResources {
 		stateTxt.setText(emp.getState());
 		zipTxt.setText(emp.getZip());
 		emailTxt.setText(emp.getEmail());
-		
-//		empIDdisp.setText(empID);
-//		firstTxt.setText(firstName);
-//		middleTxt.setText(middleInitial);
-//		lastTxt.setText(lastName);
-//		dobTxt.setText(dob);
-//		ssnTxt.setText(ssn);
-//		addressTxt.setText(address);				
-//		aptTxt.setText(apt);
-//		cityTxt.setText(city);
-//		stateTxt.setText(state);
-//		zipTxt.setText(zip);
-//		emailTxt.setText(email);
-
 	}
 }

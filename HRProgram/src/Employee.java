@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 public class Employee {
 	private String empID;
 	private String firstName;
@@ -18,16 +20,27 @@ public class Employee {
 	private String zip;
 	private String email;
 	private String id;
+	private Boolean display;
 	
 	protected Employee(){		
 	}
 	
-	protected Employee(int eId){
-//		this.id = empId;
-		getEmployee(eId);
+	protected Employee(int eId, int action){
+		if (action == 1){
+			prevEmployee(eId);
+		}
+		else if (action == 2) {
+			
+		}
+		else if (action == 3) {
+			
+		}
+		else if (action == 4) {
+			nextEmployee(eId);
+		}		
 	}
 
-	private void getEmployee(int idNum){
+	private void nextEmployee(int idNum){
 		this.id = String.valueOf(idNum);
 		
 		try {
@@ -44,6 +57,7 @@ public class Employee {
 //			prepSt.setString(1, "0");
 			ResultSet rs = prepSt.executeQuery();
 			if (rs.next()) {
+				setDisplay(true);
 				empID = rs.getString("emp_id");
 				setEmpID(empID);
 				firstName = rs.getString("first_name");
@@ -68,7 +82,68 @@ public class Employee {
 				setZip(zip);
 				email = rs.getString("email");
 				setEmail(email);
-			}						
+			}	
+			else {
+				setDisplay(false);
+				JOptionPane.showMessageDialog(null, "End of Employee Records");
+			}
+			st.close();
+			prepSt.close();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}		
+	}
+	
+	private void prevEmployee(int idNum){
+		this.id = String.valueOf(idNum);
+		
+		try {
+			// creating mysql connection
+			Class.forName("com.mysql.jdbc.Driver");
+			String myUrl = "jdbc:mysql://localhost:3306/humanresource";
+			Connection con = DriverManager.getConnection(myUrl, "root", "root");
+
+			// creating select query & statement
+			Statement st = con.createStatement();
+			PreparedStatement prepSt = con.prepareStatement("SELECT * FROM employee WHERE emp_id = (SELECT max(emp_id) FROM employee where emp_id< ?)");
+			System.out.println("ID for lookup is "+id);
+			prepSt.setString(1, id);
+			
+			ResultSet rs = prepSt.executeQuery();
+			String test = "";
+			if (rs.next()) {
+				setDisplay(true);
+				empID = rs.getString("emp_id");
+				setEmpID(empID);
+				firstName = rs.getString("first_name");
+				setFirstName(firstName);
+				middleInitial = rs.getString("middle_initial");
+				setMiddleInitial(middleInitial);
+				lastName = rs.getString("last_name");	
+				setLastName(lastName);
+				dob = rs.getString("dob");
+				setDob(dob);
+				ssn = rs.getString("ssn");
+				setSsn(ssn);
+				address = rs.getString("address");
+				setAddress(address);
+				apt = rs.getString("apt");
+				setApt(apt);
+				city = rs.getString("city");
+				setCity(city);
+				state = rs.getString("state");
+				setState(state);
+				zip = rs.getString("zip");
+				setZip(zip);
+				email = rs.getString("email");
+				setEmail(email);
+			}	
+			else {
+				test = rs.getString("emp_id");
+				System.out.println("retrieved " + test);
+				setDisplay(false);
+				JOptionPane.showMessageDialog(null, "Beginning of Employee Records");
+			}
 			st.close();
 			prepSt.close();
 		} catch (Exception e) {
@@ -171,4 +246,12 @@ public class Employee {
 	private void setEmail(String email) {
 		this.email = email;
 	}	
+	
+	protected Boolean getDisplay() {
+		return display;
+	}
+
+	private void setDisplay(Boolean disp) {
+		this.display = disp;
+	}
 }
