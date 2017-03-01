@@ -21,6 +21,7 @@ public class HumanResources {
 	private JTextField emailTxt;
 	private JTextField zipTxt;
 	private int univID;
+	private Boolean firstClick;
 	
 	/**
 	 * Launch the application.
@@ -184,15 +185,53 @@ public class HumanResources {
 					stateTxt.setText(emp.getState());
 					zipTxt.setText(emp.getZip());
 					emailTxt.setText(emp.getEmail());
-				}
+				}				
 			}
 		});
 		prevBtn.setBounds(0, 0, 90, 23);
 		frame.getContentPane().add(prevBtn);
 		
-		JButton saveBtn = new JButton("Save");
+		JButton saveBtn = new JButton("Create");
+		firstClick = true;
 		saveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (firstClick) {
+					firstClick = false;
+					saveBtn.setText("Save");
+					empIDdisp.setText("");
+					firstTxt.setText("");
+					middleTxt.setText("");
+					lastTxt.setText("");
+					dobTxt.setText("");
+					ssnTxt.setText("");
+					addressTxt.setText("");				
+					aptTxt.setText("");
+					cityTxt.setText("");
+					stateTxt.setText("");
+					zipTxt.setText("");
+					emailTxt.setText("");
+					
+				}
+				else {
+					firstClick = true;
+					saveBtn.setText("Create");
+					univID = 0;
+					Employee emp = new Employee(univID, 2);
+					if (emp.getDisplay()) {				
+						empIDdisp.setText(emp.getEmpID());
+						firstTxt.setText(emp.getFirstName());
+						middleTxt.setText(emp.getMiddleInitial());
+						lastTxt.setText(emp.getLastName());
+						dobTxt.setText(emp.getDob());
+						ssnTxt.setText(emp.getSsn());
+						addressTxt.setText(emp.getAddress());				
+						aptTxt.setText(emp.getApt());
+						cityTxt.setText(emp.getCity());
+						stateTxt.setText(emp.getState());
+						zipTxt.setText(emp.getZip());
+						emailTxt.setText(emp.getEmail());					
+					}
+				}
 			}
 		});
 		saveBtn.setBounds(115, 0, 90, 23);
@@ -201,6 +240,37 @@ public class HumanResources {
 		JButton deleteBtn = new JButton("Delete");
 		deleteBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				univID = Integer.parseInt(empIDdisp.getText());
+				System.out.println(univID);
+				Employee emp = new Employee(univID, 3);
+				if (emp.getDisplay()) {				
+					empIDdisp.setText(emp.getEmpID());
+					firstTxt.setText(emp.getFirstName());
+					middleTxt.setText(emp.getMiddleInitial());
+					lastTxt.setText(emp.getLastName());
+					dobTxt.setText(emp.getDob());
+					ssnTxt.setText(emp.getSsn());
+					addressTxt.setText(emp.getAddress());				
+					aptTxt.setText(emp.getApt());
+					cityTxt.setText(emp.getCity());
+					stateTxt.setText(emp.getState());
+					zipTxt.setText(emp.getZip());
+					emailTxt.setText(emp.getEmail());
+				}
+				if (!(emp.getDisplay()) && emp.getClearScreen()) {
+					empIDdisp.setText("0");
+					firstTxt.setText("");
+					middleTxt.setText("");
+					lastTxt.setText("");
+					dobTxt.setText("");
+					ssnTxt.setText("");
+					addressTxt.setText("");				
+					aptTxt.setText("");
+					cityTxt.setText("");
+					stateTxt.setText("");
+					zipTxt.setText("");
+					emailTxt.setText("");
+				}
 			}
 		});
 		deleteBtn.setBounds(230, 0, 90, 23);
